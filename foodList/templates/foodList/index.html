@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Your list of food</h1>
+<h3>please note you cannot enter more than 10 meals, as you might have to delete to accommodate your preferred meal
+    <!-- form for input with the url action assigned to the view foodView-->
+<form method="post" action="{% url 'foodView'  %}">
+    {%csrf_token%}
+    <input type="text" name="val" placeholder="enter your preferred meal" style="width: 50%; height: 1cm; border-radius: 0.5px">
+    <input type="submit" style="border-radius : 0.5px">
+    <p>
+    {%if messages%}
+    {%for message in messages%}
+    {{message}}
+    {% endfor %}
+    {%endif%}
+    </p>
+</form>
+
+<ul>
+    <!-- dynamically displying each object of food to a list alongside the delete function-->
+    {% for f in foodies %}
+<li>{{f.listoffood}}
+    <form action="{% url 'deleteFood' f.id %}" method="post">
+    {%csrf_token%}
+    <button type="submit">delete</button>
+</form>
+
+</li>
+{% endfor %}
+</ul>
+
+</body>
+</html>
